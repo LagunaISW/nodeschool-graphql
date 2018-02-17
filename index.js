@@ -5,7 +5,10 @@ const { graphql, buildSchema } = require('graphql');
 // Contiene las capacidades y funcionalidades de nuestro servidor
 const schema = buildSchema(`
 type Query {
-  foo: String
+  id: ID,
+  title: String,
+  duration: Int,
+  watched: Boolean
 }
 
 type Schema {
@@ -15,13 +18,19 @@ type Schema {
 
 // Se encarga de obtener los datos
 const resolvers = {
-  foo: () => 'bar'
+  id: () => '1',
+  title: () => 'bar',
+  duration: () => 90,
+  watched: () => true
 };
 
 // El query que hacemos a nuestro servidor
 const query = `
 query myFirstQuery {
-  foo
+  id
+  title
+  duration
+  watched
 }
 `;
 
