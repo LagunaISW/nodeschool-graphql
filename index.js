@@ -1,6 +1,11 @@
 'use strict';
 
+const express = require('express');
+const graphqlHTTP = require('express-graphql');
 const { graphql, buildSchema } = require('graphql');
+
+const PORT = process.env.PORT || 3000;
+const server = express();
 
 // Contiene las capacidades y funcionalidades de nuestro servidor
 const schema = buildSchema(`
@@ -48,16 +53,12 @@ const resolvers = {
   videos: () => videos
 };
 
-// El query que hacemos a nuestro servidor
-const query = `
-query myFirstQuery {
-  videos {
-    id
-    title
-  }
-}
-`;
+server.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true,
+  rootValue: resolvers
+}));
 
-graphql(schema, query, resolvers) // Regresa una promesa
-  .then((result) => console.log(result))
-  .catch((error) => console.log(error));
+server.listen(PORT, () => {
+  console.log(`Listening on http://localhost:${PORT}`);
+});
