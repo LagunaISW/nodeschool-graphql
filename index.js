@@ -4,11 +4,15 @@ const { graphql, buildSchema } = require('graphql');
 
 // Contiene las capacidades y funcionalidades de nuestro servidor
 const schema = buildSchema(`
-type Query {
+type Video {
   id: ID,
   title: String,
   duration: Int,
   watched: Boolean
+}
+
+type Query {
+  video: Video
 }
 
 type Schema {
@@ -18,19 +22,21 @@ type Schema {
 
 // Se encarga de obtener los datos
 const resolvers = {
-  id: () => '1',
-  title: () => 'bar',
-  duration: () => 90,
-  watched: () => true
+  video: () => ({
+    id: 1,
+    title: 'Star Wars',
+    duration: 90,
+    watched: true
+  })
 };
 
 // El query que hacemos a nuestro servidor
 const query = `
 query myFirstQuery {
-  id
-  title
-  duration
-  watched
+  video {
+    id
+    title
+  }
 }
 `;
 
