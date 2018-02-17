@@ -13,12 +13,29 @@ type Video {
 
 type Query {
   video: Video
+  videos: [Video]
 }
 
 type Schema {
   query: Query
 }
 `);
+
+const videoA = {
+  id: 2,
+  title: 'Coco',
+  duration: 120,
+  watched: false
+};
+
+const videoB = {
+  id: 3,
+  title: 'Black Panter',
+  duration: 220,
+  watched: true
+};
+
+const videos = [videoA, videoB];
 
 // Se encarga de obtener los datos
 const resolvers = {
@@ -27,13 +44,14 @@ const resolvers = {
     title: 'Star Wars',
     duration: 90,
     watched: true
-  })
+  }),
+  videos: () => videos
 };
 
 // El query que hacemos a nuestro servidor
 const query = `
 query myFirstQuery {
-  video {
+  videos {
     id
     title
   }
